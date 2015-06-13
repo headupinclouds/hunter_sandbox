@@ -136,18 +136,17 @@ find_package(ZLIB CONFIG REQUIRED)
 list(APPEND EXTRA_LIBS ZLIB::zlib)
 
 ### BZIP2
-if(NOT is_ios)
-  hunter_add_package(BZip2)
-  find_package(BZip2 CONFIG REQUIRED)
-  list(APPEND EXTRA_LIBS BZip2::bz2)
+# if(NOT is_ios)
+#   hunter_add_package(BZip2)
+#   find_package(BZip2 CONFIG REQUIRED)
+#   list(APPEND EXTRA_LIBS BZip2::bz2)
 
-  ### test_bzip2  : see IOSTREAMS_NO_BZIP2=1 so this shouldn't work???
-  add_executable(test_bzip2 test_bzip2.cpp)
-  target_link_libraries(test_bzip2 HS ${EXTRA_LIBS})
+#   ### test_bzip2  : see IOSTREAMS_NO_BZIP2=1 so this shouldn't work???
+#   add_executable(test_bzip2 test_bzip2.cpp)
+#   target_link_libraries(test_bzip2 HS ${EXTRA_LIBS})
+# endif()
 
-endif()
-
-message("EXTRA_LIBS : ${EXTRA_LIBS}")
+Message("EXTRA_LIBS : ${EXTRA_LIBS}")
 
 ### test_zlib
 add_executable(test_zlib test_zlib.cpp)
