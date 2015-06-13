@@ -17,6 +17,8 @@ include(sugar_include)
 ###############
 project(hs)
 
+string(COMPARE EQUAL "${CMAKE_OSX_SYSROOT}" "iphoneos" is_ios)
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 option(BUILD_SHARED "Build shared libraries"  ON)
@@ -112,20 +114,44 @@ install(TARGETS HS
 #     message(STATUS "VARIABLE: ${_variableName}=${${_variableName}}")
 # endforeach()
 
-hunter_add_package(ZLIB)
-find_package(ZLIB CONFIG REQUIRED)
+
+### BOOST
+##
+## IOSTREAM_NO_BZIP2=1 is ignored for ANDROID toolchain 
+## Since the testb.cpp example can build with bzip2_compressor()
+## But the same example doesn't seem to build with the zlib_comressor we want
+##
+## NOTE: setting in cmake/Hunter/config.cmake  
+##
+## hunter_config(Boost VERSION ${HUNTER_Boost_VERSION} CMAKE_ARGS IOSTREAMS_NO_BZIP2=1)
 
 hunter_add_package(Boost COMPONENTS filesystem system serialization iostreams)
-
-#find_package(Boost REQUIRED filesystem system serialization iostreams)
 find_package(Boost CONFIG REQUIRED filesystem system serialization iostreams)
+set(EXTRA_LIBS Boost::filesystem Boost::system Boost::serialization Boost::iostreams)
 
-include_directories(${Boost_INCLUDE_DIRS})
-message("Boost_INCLUDE_DIRS =  ${Boost_INCLUDE_DIRS}; Boost_LIBRARIES =  ${Boost_LIBRARIES}")
+### ZLIB
+hunter_add_package(ZLIB)
+find_package(ZLIB CONFIG REQUIRED)
+list(APPEND EXTRA_LIBS ZLIB::zlib)
 
-add_executable(testb testb.cpp)
+### BZIP2
+if(NOT is_ios)
+  hunter_add_package(BZip2)
+  find_package(BZip2 CONFIG REQUIRED)
+  list(APPEND EXTRA_LIBS BZip2::bz2)
 
-#target_link_libraries(testb HS ${Boost_LIBRARIES})
-target_link_libraries(testb HS Boost::filesystem Boost::system Boost::serialization Boost::iostreams ZLIB::zlib)
+  ### test_bzip2  : see IOSTREAMS_NO_BZIP2=1 so this shouldn't work???
+  add_executable(test_bzip2 test_bzip2.cpp)
+  target_link_libraries(test_bzip2 HS ${EXTRA_LIBS})
+
+endif()
+
+message("EXTRA_LIBS : ${EXTRA_LIBS}")
+
+### test_zlib
+add_executable(test_zlib test_zlib.cpp)
+target_link_libraries(test_zlib HS ${EXTRA_LIBS})
+
+
 
 

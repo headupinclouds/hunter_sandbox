@@ -35,13 +35,8 @@ int main(int argc, char **argv)
 
     std::string filename = "/tmp/record.dat";
 
-#if 0
     typedef boost::iostreams::zlib_compressor Compressor;
     typedef boost::iostreams::zlib_decompressor Decompressor;
-#else
-    typedef boost::iostreams::bzip2_compressor Compressor;
-    typedef boost::iostreams::bzip2_decompressor Decompressor;
-#endif
 
     { // Dump the record:
 	Record record(1, "kermit");
