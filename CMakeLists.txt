@@ -8,15 +8,15 @@ HunterGate(
     LOCAL
 )
 
-### Import sugar for source collection ###
-hunter_add_package(Sugar)
-include("${SUGAR_ROOT}/cmake/Sugar")
-include(sugar_include)
-
 ###############
 ##### HS ######
 ###############
 project(hs)
+
+### Import sugar for source collection ###
+hunter_add_package(Sugar)
+include("${SUGAR_ROOT}/cmake/Sugar")
+include(sugar_include)
 
 string(COMPARE EQUAL "${CMAKE_OSX_SYSROOT}" "iphoneos" is_ios)
 
