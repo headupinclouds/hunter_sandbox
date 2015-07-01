@@ -110,11 +110,9 @@ install(TARGETS HS
   RESOURCE DESTINATION ${CMAKE_INSTALL_PREFIX}/share/HS/Resources
 )
 
-# get_cmake_property(_variableNames VARIABLES)
-# foreach (_variableName ${_variableNames})
-#     message(STATUS "VARIABLE: ${_variableName}=${${_variableName}}")
-# endforeach()
-
+### ZLIB
+hunter_add_package(ZLIB)
+find_package(ZLIB CONFIG REQUIRED)
 
 ### BOOST
 ##
@@ -126,14 +124,23 @@ install(TARGETS HS
 ##
 ## hunter_config(Boost VERSION ${HUNTER_Boost_VERSION} CMAKE_ARGS IOSTREAMS_NO_BZIP2=1)
 
-hunter_add_package(Boost COMPONENTS filesystem system serialization iostreams)
-find_package(Boost CONFIG REQUIRED filesystem system serialization iostreams)
-set(EXTRA_LIBS Boost::filesystem Boost::system Boost::serialization Boost::iostreams)
+# hunter_add_package(Boost COMPONENTS filesystem system serialization iostreams)
+# find_package(Boost CONFIG REQUIRED filesystem system serialization iostreams)
+# set(EXTRA_LIBS Boost::filesystem Boost::system Boost::serialization Boost::iostreams)
 
-### ZLIB
-hunter_add_package(ZLIB)
-find_package(ZLIB CONFIG REQUIRED)
+hunter_add_package(Boost COMPONENTS iostreams)
+find_package(Boost CONFIG REQUIRED iostreams)
+set(EXTRA_LIBS Boost::iostreams)
+
 list(APPEND EXTRA_LIBS ZLIB::zlib)
+
+# Needed on ANDROID (maybe all non APPLE)
+#add_definitions(-DBOOST_IOSTREAMS_NO_LIB=1)
+
+# get_cmake_property(_variableNames VARIABLES)
+# foreach (_variableName ${_variableNames})
+#     message(STATUS "VARIABLE: ${_variableName}=${${_variableName}}")
+# endforeach()
 
 ### BZIP2
 # if(NOT is_ios)
@@ -149,8 +156,13 @@ list(APPEND EXTRA_LIBS ZLIB::zlib)
 Message("EXTRA_LIBS : ${EXTRA_LIBS}")
 
 ### test_zlib
-add_executable(test_zlib test_zlib.cpp)
-target_link_libraries(test_zlib HS ${EXTRA_LIBS})
+#add_executable(test_zlib test_zlib.cpp)
+#target_link_libraries(test_zlib HS ${EXTRA_LIBS})
+
+### test_iostreams
+add_executable(test_iostreams test_iostreams.cpp)
+target_link_libraries(test_iostreams HS ${EXTRA_LIBS})
+
 
 
 

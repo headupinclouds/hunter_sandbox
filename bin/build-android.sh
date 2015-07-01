@@ -16,4 +16,4 @@
 #        "x86" - IA-32 instruction set
 #        "mips" - MIPS32 instruction set
 
-build.py --toolchain android-ndk-r10e-api-21-armeabi-v7a-neon --verbose --fwd HUNTER_CONFIGURATION_TYPES=Release ANDROID=TRUE
+build.py --toolchain android-ndk-r10e-api-16-armeabi-v7a-neon-clang-35 --verbose --fwd HUNTER_CONFIGURATION_TYPES=Release ANDROID=TRUE --clear

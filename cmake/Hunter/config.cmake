@@ -1,3 +1,12 @@
 ### Boost
-hunter_config(Boost VERSION ${HUNTER_Boost_VERSION} CMAKE_ARGS IOSTREAMS_NO_BZIP2=1)
+
+
+#build.py --toolchain android-ndk-r10e-api-16-armeabi-v7a-neon-clang-35 --verbose --fwd HUNTER_CONFIGURATION_TYPES=Release ANDROID=TRUE --clear
+
+# This works with above compilation
+#hunter_config(Boost VERSION 1.58.0-p0-android-zlib CMAKE_ARGS IOSTREAMS_NO_BZIP2=1)
+
+# This doesn't work with above compilation
+hunter_config(Boost VERSION 1.58.0-p1 CMAKE_ARGS IOSTREAMS_NO_BZIP2=1)
+
 
