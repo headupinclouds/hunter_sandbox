@@ -132,6 +132,10 @@ hunter_add_package(Boost COMPONENTS iostreams)
 find_package(Boost CONFIG REQUIRED iostreams)
 set(EXTRA_LIBS Boost::iostreams)
 
+hunter_add_package(OpenCV)
+find_package(OpenCV REQUIRED)
+list(APPEND EXTRA_LIBS ${OpenCV_LIBS})
+
 list(APPEND EXTRA_LIBS ZLIB::zlib)
 
 # Needed on ANDROID (maybe all non APPLE)
