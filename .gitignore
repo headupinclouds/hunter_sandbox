@@ -16,6 +16,9 @@
 # Fortran module files
 *.mod
 
+# Emacs files
+*.*~
+
 # Compiled Static libraries
 *.lai
 *.la
