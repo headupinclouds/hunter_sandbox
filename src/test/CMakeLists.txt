@@ -14,5 +14,5 @@ target_link_libraries(test_zlib "${BOOST_LIBS}")
 install(TARGETS test_zlib DESTINATION bin)
 
 add_executable(test_sdk "${HUNTER_SANDBOX_TEST_SDK_SRCS}")
-target_link_libraries(test_sdk sdk)
+target_link_libraries(test_sdk mysdk)
 install(TARGETS test_sdk DESTINATION bin)
