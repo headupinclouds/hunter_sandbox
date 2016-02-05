@@ -16,14 +16,21 @@ target_link_libraries(boost_test
   )
 
 ### sdk
-add_library(sdk ${API_LIB_TYPE} ${HUNTER_SANDBOX_LIBSDK_SRCS})
+add_library(mysdk ${API_LIB_TYPE} ${HUNTER_SANDBOX_LIBSDK_SRCS})
 
 ### Generate the export header
 include(GenerateExportHeader)
-generate_export_header(sdk EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/lib/libsdk/sdk_export.h)
-target_include_directories(sdk PUBLIC ${CMAKE_BINARY_DIR}/lib/libsdk)
+generate_export_header(mysdk EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/lib/libsdk/sdk_export.h)
+target_include_directories(mysdk PUBLIC ${CMAKE_BINARY_DIR}/lib/libsdk)
 
-target_link_libraries(sdk
+if(NOT is_ios)
+  set_target_properties(mysdk PROPERTIES
+    VERSION "${hunter_sandbox_VERSION}"
+    SOVERSION "${hunter_sandbox_VERSION_MAJOR}"
+    )
+endif()
+
+target_link_libraries(mysdk
   PRIVATE
   a
   b
@@ -50,7 +57,7 @@ write_basic_package_version_file("${version_config}" VERSION "${hunter_sandbox_V
 configure_file("${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in" "${project_config}" @ONLY)
 
 install(
-  TARGETS sdk
+  TARGETS mysdk
   EXPORT "${targets_export_name}"
   LIBRARY DESTINATION "lib"
   ARCHIVE DESTINATION "lib"
