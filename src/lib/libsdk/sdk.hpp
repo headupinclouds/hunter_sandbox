@@ -1,7 +1,7 @@
 #ifndef sdk_h_
 #define sdk_h_
 
-#include "sdk_export.h"
+#include "mysdk_export.h"
 
-int SDK_EXPORT run();
+int MYSDK_EXPORT run();
 #endif // sdk_h_

@@ -20,8 +20,8 @@ add_library(mysdk ${API_LIB_TYPE} ${HUNTER_SANDBOX_LIBSDK_SRCS})
 
 ### Generate the export header
 include(GenerateExportHeader)
-generate_export_header(mysdk EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/lib/libsdk/sdk_export.h)
-target_include_directories(mysdk PUBLIC ${CMAKE_BINARY_DIR}/lib/libsdk)
+generate_export_header(mysdk EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/lib/libsdk/mysdk_export.h")
+target_include_directories(mysdk PUBLIC "${CMAKE_BINARY_DIR}/lib/libsdk")
 
 if(NOT is_ios)
   set_target_properties(mysdk PROPERTIES
@@ -67,6 +67,7 @@ install(
 
 install(
   FILES
-  "${HUNTER_SANDBOX_LIBSDK_PUBLIC_HDRS}"  
+  "${HUNTER_SANDBOX_LIBSDK_PUBLIC_HDRS}"
+  "${CMAKE_BINARY_DIR}/lib/libsdk/mysdk_export.h"
   DESTINATION "${include_install_dir}/${CMAKE_PROJECT_NAME}"
   )
