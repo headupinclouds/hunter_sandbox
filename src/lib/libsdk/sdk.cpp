@@ -3,7 +3,12 @@
 #include "libb/exb.hpp"
 #include "lib_boost_test/boost.h"
 
-int run()
+int some_func()
+{
+    return SomeClass(2)();
+}
+
+int sdk_run()
 {
     funca(1, 2);
     funcb(1, 2);

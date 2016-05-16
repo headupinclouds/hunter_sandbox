@@ -1,5 +1,16 @@
 sugar_include(.)
 
+
+include(CheckCCompilerFlag)
+CHECK_C_COMPILER_FLAG("-Wl,-dead_strip" FLAG_dead_strip)
+IF(NOT FLAG_dead_strip)
+  #SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "-Wl,--gc-sections")
+  SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,--gc-sections")
+ELSE()
+  #SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "-Wl,-dead_strip")
+  SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,-dead_strip")
+ENDIF()
+
 set(API_LIB_TYPE SHARED)
 
 ### A
@@ -17,6 +28,8 @@ target_link_libraries(boost_test
 
 ### sdk
 add_library(mysdk ${API_LIB_TYPE} ${HUNTER_SANDBOX_LIBSDK_SRCS})
+
+include(symbols.cmake)
 
 ### Generate the export header
 include(GenerateExportHeader)
