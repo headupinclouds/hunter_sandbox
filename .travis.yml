@@ -45,8 +45,8 @@ env:
   - TOOLCHAIN=osx-10-9 CONFIG=Release
   - TOOLCHAIN=gcc CONFIG=Debug
   - TOOLCHAIN=gcc CONFIG=Release
-#  - TOOLCHAIN=gcc-4-8 CONFIG=Release
-#  - TOOLCHAIN=gcc-4-8 CONFIG=Debug
+  - TOOLCHAIN=gcc-4-8-pic CONFIG=Release
+  - TOOLCHAIN=gcc-4-8-pic CONFIG=Debug
   - TOOLCHAIN=ios-nocodesign CONFIG=Debug EXTRA="--iossim"
   - TOOLCHAIN=ios-nocodesign CONFIG=Release EXTRA="--iossim"
   - TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon CONFIG=Release
@@ -92,9 +92,9 @@ matrix:
     ### OSX excludes ###
     # TOOLCHAIN=gcc works fine on OSX
     - os: osx
-      env: TOOLCHAIN=gcc-4-8 CONFIG=Debug
+      env: TOOLCHAIN=gcc-4-8-pic CONFIG=Debug
     - os: osx
-      env: TOOLCHAIN=gcc-4-8 CONFIG=Release
+      env: TOOLCHAIN=gcc-4-8-pic CONFIG=Release
 
     # https://github.com/travis-ci-tester/travis-test-mac-clang-address-sanitizer
     - os: osx
