@@ -89,6 +89,15 @@ matrix:
     - os: linux
       env: TOOLCHAIN=gcc CONFIG=Release
 
+    # https://github.com/ruslo/hunter/issues/417
+    # https://svn.boost.org/trac/boost/ticket/12217
+    # FIXME {
+    - os: linux
+      env: TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon CONFIG=Debug
+    - os: linux
+      env: TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon CONFIG=Release
+    # }
+
     ### OSX excludes ###
     # TOOLCHAIN=gcc works fine on OSX
     - os: osx
