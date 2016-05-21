@@ -31,7 +31,7 @@ addons:
 
       # https://github.com/travis-ci-tester/travis-test-gcc-cxx-11
       - g++-4.8
-  
+
 env:
 #  - TOOLCHAIN=default CONFIG=Release
 #  - TOOLCHAIN=default CONFIG=Debug
@@ -45,8 +45,8 @@ env:
   - TOOLCHAIN=osx-10-9 CONFIG=Release
   - TOOLCHAIN=gcc CONFIG=Debug
   - TOOLCHAIN=gcc CONFIG=Release
-#  - TOOLCHAIN=gcc-4-8 CONFIG=Release
-#  - TOOLCHAIN=gcc-4-8 CONFIG=Debug
+  - TOOLCHAIN=gcc-4-8-pic CONFIG=Release
+  - TOOLCHAIN=gcc-4-8-pic CONFIG=Debug
   - TOOLCHAIN=ios-nocodesign CONFIG=Debug EXTRA="--iossim"
   - TOOLCHAIN=ios-nocodesign CONFIG=Release EXTRA="--iossim"
   - TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon CONFIG=Release
@@ -89,12 +89,21 @@ matrix:
     - os: linux
       env: TOOLCHAIN=gcc CONFIG=Release
 
+    # https://github.com/ruslo/hunter/issues/417
+    # https://svn.boost.org/trac/boost/ticket/12217
+    # FIXME {
+    - os: linux
+      env: TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon CONFIG=Debug
+    - os: linux
+      env: TOOLCHAIN=android-ndk-r10e-api-19-armeabi-v7a-neon CONFIG=Release
+    # }
+
     ### OSX excludes ###
     # TOOLCHAIN=gcc works fine on OSX
     - os: osx
-      env: TOOLCHAIN=gcc-4-8 CONFIG=Debug
+      env: TOOLCHAIN=gcc-4-8-pic CONFIG=Debug
     - os: osx
-      env: TOOLCHAIN=gcc-4-8 CONFIG=Release
+      env: TOOLCHAIN=gcc-4-8-pic CONFIG=Release
 
     # https://github.com/travis-ci-tester/travis-test-mac-clang-address-sanitizer
     - os: osx
@@ -111,7 +120,7 @@ matrix:
       env: TOOLCHAIN=sanitize-thread CONFIG=Release
     - os: osx
       env: TOOLCHAIN=sanitize-thread CONFIG=Debug
-  
+
 install:
   # Info about OS
   - uname -a
@@ -140,4 +149,4 @@ install:
   - export ANDROID_NDK_r10e="`pwd`/_ci/android-ndk-r10e"
 
 script:
-    - build.py --toolchain ${TOOLCHAIN} --config ${CONFIG} --verbose --fwd HUNTER_CONFIGURATION_TYPES=${CONFIG} --discard 10 --tail 100
+    - build.py --toolchain ${TOOLCHAIN} --config ${CONFIG} --verbose --fwd HUNTER_CONFIGURATION_TYPES=${CONFIG}
